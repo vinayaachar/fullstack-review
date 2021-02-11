@@ -23,6 +23,13 @@ class App extends React.Component {
       success: () => console.log('successfully made a post')
     })
 
+    $.get('http://localhost:1128/repos', (data) => {
+      console.log('got response from server')
+      this.setState({
+        repos: data
+      })
+    })
+
   }
 
   render () {

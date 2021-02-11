@@ -56,10 +56,13 @@ let save = (gitProfile, res) => {
       forks_count,
     });
     repo.save()
-      .then((item) => console.log('Repos added', item))
+      .then((item) => console.log('Repos added'))
       .catch(err => console.log(err));
   })
 
 }
 
-module.exports.save = save;
+module.exports = {
+  save,
+  Repo
+}

@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 require('dotenv').config()
 let mongoDatabase = require('../database/index.js');
+let Repo = require('../database/index.js');
 
 let github = require('../helpers/github.js');
 app.use(express.static(__dirname + '/../client/dist'));
@@ -24,6 +25,11 @@ app.post('/repos', function (req, res) {
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
+  Repo.Repo.find(
+    {stargazers_count : {$gt: 10}}
+  ).limit(25)
+    .then(repos => res.json(repos))
+    .catch(err => console.log(err))
 });
 
 let port = 1128;
