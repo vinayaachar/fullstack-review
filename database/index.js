@@ -25,7 +25,7 @@ const repoSchema = new Schema({
 
 let Repo = mongoose.model('Repo', repoSchema);
 
-let save = (gitProfile, res) => {
+let save = (gitProfile, cb) => {
   // TODO: Your code here
   // This function should save a repo or repos to
   // the MongoDB
@@ -50,7 +50,7 @@ let save = (gitProfile, res) => {
 
     Repo.findOne({name: name}, (err, data) => {
       if (err) console.log(err);
-      if(data) console.log('Data already exsists')
+      if(data) cb(`${owner.login} repos updated or already exists`);
       else {
         const repo = new Repo({
           id,
@@ -64,13 +64,13 @@ let save = (gitProfile, res) => {
         });
         repo.save()
           .then((item) => console.log('Repos added'))
-          .catch(err => console.log(err));
+          .catch(err => cb(err));
       }
     })
 
 
   })
-
+  cb(null, `${owner.login} repos added`);
 }
 
 module.exports = {

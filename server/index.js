@@ -18,7 +18,10 @@ app.post('/repos', function (req, res) {
   // save the repo information in the database
   var gitProfile = github.getReposByUsername(req.body.username);
   gitProfile.then(response => {
-    mongoDatabase.save(response, res);
+    mongoDatabase.save(response, (err, data) => {
+      if (err) console.log(err);
+      res.status(200).send(data);
+    });
   })
 });
 
