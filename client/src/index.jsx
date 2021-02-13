@@ -13,6 +13,15 @@ class App extends React.Component {
 
   }
 
+  componentDidMount() {
+    $.get('http://localhost:1128/repos', (data) => {
+      console.log('got response from server', data)
+      this.setState({
+        repos: data
+      })
+    })
+  }
+
   search (term) {
     console.log(`${term} was searched`);
     //ajax post to /repos
@@ -24,12 +33,11 @@ class App extends React.Component {
     })
 
     $.get('http://localhost:1128/repos', (data) => {
-      console.log('got response from server')
+      console.log('got response from server', data)
       this.setState({
         repos: data
       })
     })
-
   }
 
   render () {

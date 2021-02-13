@@ -19,7 +19,8 @@ const repoSchema = new Schema({
   created_at: {type: Date, default: Date.now},
   stargazers_count: Number,
   watchers_count: Number,
-  forks_count: Number
+  forks_count: Number,
+  svn_url: String
 });
 
 let Repo = mongoose.model('Repo', repoSchema);
@@ -44,20 +45,30 @@ let save = (gitProfile, res) => {
     const stargazers_count = profile.stargazers_count;
     const watchers_count = profile.watchers_count;
     const forks_count = profile.forks_count;
+    const svn_url = profile.svn_url;
 
 
-    const repo = new Repo({
-      id,
-      name,
-      owner,
-      created_at,
-      stargazers_count,
-      watchers_count,
-      forks_count,
-    });
-    repo.save()
-      .then((item) => console.log('Repos added'))
-      .catch(err => console.log(err));
+    Repo.findOne({name: name}, (err, data) => {
+      if (err) console.log(err);
+      if(data) console.log('Data already exsists')
+      else {
+        const repo = new Repo({
+          id,
+          name,
+          owner,
+          created_at,
+          stargazers_count,
+          watchers_count,
+          forks_count,
+          svn_url
+        });
+        repo.save()
+          .then((item) => console.log('Repos added'))
+          .catch(err => console.log(err));
+      }
+    })
+
+
   })
 
 }

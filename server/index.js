@@ -26,7 +26,7 @@ app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
   Repo.Repo.find(
-    {stargazers_count : {$gt: 10}}
+    {stargazers_count : {$gt: 50}}
   ).limit(25)
     .then(repos => res.json(repos))
     .catch(err => console.log(err))
